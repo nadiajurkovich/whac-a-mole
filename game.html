@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>WHAC-A-MOLE</title>
+
+	<style type="text/css">
+		body{
+			background-color: rgb(1, 137, 63);
+			text-align: center;
+		}
+		img{
+			width: 150px;
+			height: 150px;
+			padding: 5px;
+		}
+		h1{
+			font-family: Futura;
+			font-size: 30px;
+			font-weight: 100;
+			color: #ffff00;
+			padding: 5px;
+			margin: 0;
+		}
+		h2{
+			font-family: Futura;
+			font-size: 36px;
+			font-weight: 100;
+			color: #ffffff;
+			padding: 5px;
+			margin: 0;
+		}
+		h3{
+			font-family: Futura;
+			font-size: 24px;
+			font-weight: 100;
+			color: #ffff00;
+		}
+		#mole1{
+			display: none;
+		}
+		#mole2{
+			display: none;
+		}
+		#mole3{
+			display: none;
+		}
+		#mole4{
+			display: none;
+		}
+		#mole5{
+			display: none;
+		}
+		#mole6{
+			display: none;
+		}
+		#mole7{
+			display: none;
+		}
+		#mole8{
+			display: none;
+		}
+		#mole9{
+			display: none;
+		}
+		.container{
+			width: 500px;
+			margin:auto;
+			margin-bottom: 30px;
+		}
+		
+		.timer{
+			padding-left: 10px;
+			padding-right: 10px;
+	
+			display: inline-block;
+			width: 225px;
+			text-align: left;
+		}
+
+		.score{
+			padding-left: 10px;
+			padding-right: 10px;
+	
+			display: inline-block;
+			width: 225px;
+			text-align: right;
+		}
+
+		.num1{
+			display: inline-block;
+			width: 235px;
+
+			text-align: left;
+			padding-left: 10px;
+		}
+
+		.num2{
+			display: inline-block;
+			width: 235px;
+
+			text-align: right;
+			padding-right: 10px;
+		}
+
+		.grid{
+			display: grid;
+			justify-content: center;
+
+			grid-template-columns: auto auto auto;
+		}
+
+		.hole{
+
+		}
+		.mole{
+
+		}
+
+		.button{
+			height: 50px;
+			width: 200px;
+			line-height: 0px;
+			background-color: rgb(1, 137, 63);
+			border-radius: 7px;
+			border: 2px solid #ffff00;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="timer">
+			<h1>Timer:</h1>
+		</div>
+
+		<div class="score">
+			<h1>Score:</h1>
+		</div>
+
+		<div class="num1">
+			<h2 id="counter">60</h2>
+		</div>
+
+		<div class="num2">
+			<h2 id="score">0</h2>
+		</div>
+
+		<div class="grid">
+
+			<div>
+				<img id="hole1" class = "hole" src="hole.png">
+				<img id="mole1" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole2" class = "hole" src="hole.png">
+				<img id="mole2" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole3" class = "hole" src="hole.png">
+				<img id="mole3" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole4" class = "hole" src="hole.png">
+				<img id="mole4" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole5" class = "hole" src="hole.png">
+				<img id="mole5" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole6" class = "hole" src="hole.png">
+				<img id="mole6" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole7" class = "hole" src="hole.png">
+				<img id="mole7" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole8" class = "hole" src="hole.png">
+				<img id="mole8" class = "mole" src="mole.png">
+			</div>
+			<div>
+				<img id="hole9" class = "hole" src="hole.png">
+				<img id="mole9" class = "mole" src="mole.png">
+			</div>
+			
+		</div>
+
+	</div>
+
+	<button id="button" class="button" ><h3>Reset Game</h3></button>
+
+<script>
+
+	$(document).ready(function(){
+
+		var cnt;
+	
+		function randomtime(min,max){
+			return Math.random()*(max-min)+min;
+		}
+
+		function randomHole(){
+			
+			var rand = Math.floor(Math.random()*10);
+
+			$("#hole" + rand).hide();
+			$("#mole" + rand).show();
+
+			var time = randomtime(500,2500);
+			
+			setTimeout(function(){
+				
+			 	$("#mole" + rand).hide();
+			 	$("#hole" + rand).show();
+
+			 }, time);
+
+		}
+
+		var score;
+		
+		$("#button").click(function() {
+			$(".hole").show();
+			$(".mole").hide();
+			clearInterval(cnt);
+			score = 0;
+			$("#score").html(score);
+
+			var count = 60; 
+
+			cnt = setInterval(function(){
+				count = count - 1;
+
+				if(count >= 0){
+					$("#counter").html(count);
+					randomHole();
+				}
+				if(count == 0){
+					clearInterval(cnt);
+					alert("Game over!");
+				}
+			}, 1000);
+		});
+
+		$(".mole").click(function(){
+			
+			$currentID = $(this).attr("id").slice(-1);
+			
+			score = score+1;
+			$("#score").html(score);
+			$("#mole"+$currentID).hide();
+			$("#hole"+$currentID).show();
+
+		});
+ 
+	});
+
+</script>
+
+</body>
+</html>
